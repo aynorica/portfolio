@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, Send, CheckCircle } from "lucide-react";
-import { PERSONAL_INFO } from "@/lib/constants";
+import { Mail, Send, CheckCircle, AlertCircle } from "lucide-react";
+import { PERSONAL_INFO, EMAILJS } from "@/lib/constants";
 import { motion, AnimatePresence } from "framer-motion";
 import { fadeInUp, staggerContainer } from "@/lib/animations";
+import emailjs from "@emailjs/browser";
 
 export default function ContactSection() {
 	const [formData, setFormData] = useState({
@@ -21,16 +22,38 @@ export default function ContactSection() {
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		setIsSubmitting(true);
+		setSubmitStatus("idle");
 
-		// Simulate form submission
-		setTimeout(() => {
+		try {
+			const templateParams = {
+				from_name: formData.name,
+				from_email: formData.email,
+				subject: formData.subject,
+				message: formData.message,
+				to_email: PERSONAL_INFO.email,
+			};
+
+			const result = await emailjs.send(
+				EMAILJS.SERVICE_ID,
+				EMAILJS.TEMPLATE_ID,
+				templateParams,
+				EMAILJS.PUBLIC_KEY,
+			);
+
+			if (result.status === 200) {
+				setSubmitStatus("success");
+				setFormData({ name: "", email: "", subject: "", message: "" });
+				// Reset success message after 5 seconds
+				setTimeout(() => setSubmitStatus("idle"), 5000);
+			} else {
+				throw new Error("Failed to send message");
+			}
+		} catch (error) {
+			console.error("EmailJS Error:", error);
+			setSubmitStatus("error");
+		} finally {
 			setIsSubmitting(false);
-			setSubmitStatus("success");
-			setFormData({ name: "", email: "", subject: "", message: "" });
-
-			// Reset success message after 5 seconds
-			setTimeout(() => setSubmitStatus("idle"), 5000);
-		}, 1500);
+		}
 	};
 
 	const handleChange = (
@@ -104,6 +127,33 @@ export default function ContactSection() {
 										className="px-8 py-3 rounded-full bg-white/5 border border-white/10 font-bold hover:bg-white/10 transition-all"
 									>
 										Send Another
+									</button>
+								</motion.div>
+							) : submitStatus === "error" ? (
+								<motion.div
+									key="error"
+									initial={{ opacity: 0, scale: 0.9 }}
+									animate={{ opacity: 1, scale: 1 }}
+									exit={{ opacity: 0, scale: 0.9 }}
+									className="text-center py-12"
+								>
+									<div className="flex justify-center mb-6">
+										<div className="w-20 h-20 rounded-full bg-red-500/10 flex items-center justify-center text-red-500 shadow-[0_0_30px_rgba(239,68,68,0.2)]">
+											<AlertCircle className="w-10 h-10" />
+										</div>
+									</div>
+									<h3 className="text-3xl font-bold mb-3 font-heading">
+										Dispatch Failed
+									</h3>
+									<p className="text-muted-foreground text-lg mb-8">
+										Something went wrong. Please try again
+										or use direct email.
+									</p>
+									<button
+										onClick={() => setSubmitStatus("idle")}
+										className="px-8 py-3 rounded-full bg-white/5 border border-white/10 font-bold hover:bg-white/10 transition-all"
+									>
+										Try Again
 									</button>
 								</motion.div>
 							) : (

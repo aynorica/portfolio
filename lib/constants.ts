@@ -279,3 +279,9 @@ export const THEME_COLORS = {
 	text: "#FAFAFF", // Ghost White
 	gradient: "linear-gradient(135deg, #00D4FF, #00FFAA)",
 };
+
+export const EMAILJS = {
+	SERVICE_ID: "service_h5qn1e8",
+	TEMPLATE_ID: "YOUR_TEMPLATE_ID", // TODO: Replace with your actual Template ID
+	PUBLIC_KEY: "YOUR_PUBLIC_KEY", // TODO: Replace with your actual Public Key
+};
