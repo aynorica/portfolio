@@ -82,6 +82,14 @@ export default function Header() {
 				</div>
 
 				<div className="hidden lg:flex lg:flex-1 lg:justify-end gap-4 items-center">
+					<a
+						href="https://docs.google.com/document/d/1Z9If1DGKY1XZM26amY69JA15lqiQ6tnCTtXhbywm_ks/edit?tab=t.0"
+						target="_blank"
+						rel="noopener noreferrer"
+						className="px-5 py-2.5 bg-gradient-to-r from-neon-blue to-neon-cyan text-deep-navy font-bold rounded-full text-sm tracking-wide hover:scale-105 transition-transform shadow-[0_0_15px_rgba(0,212,255,0.3)] hover:shadow-[0_0_20px_rgba(0,212,255,0.5)]"
+					>
+						Resume
+					</a>
 					<ThemeToggle />
 				</div>
 			</nav>
@@ -112,6 +120,15 @@ export default function Header() {
 									{item.name}
 								</Link>
 							))}
+							<a
+								href="https://docs.google.com/document/d/1Z9If1DGKY1XZM26amY69JA15lqiQ6tnCTtXhbywm_ks/edit?tab=t.0"
+								target="_blank"
+								rel="noopener noreferrer"
+								className="block mx-3 my-2 px-4 py-2.5 bg-gradient-to-r from-neon-blue to-neon-cyan text-deep-navy font-bold rounded-full text-center text-sm tracking-wide shadow-[0_0_15px_rgba(0,212,255,0.3)]"
+								onClick={() => setMobileMenuOpen(false)}
+							>
+								Resume
+							</a>
 							<div className="px-3 py-2">
 								<ThemeToggle />
 							</div>
