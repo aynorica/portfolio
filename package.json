@@ -6,7 +6,8 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"lint": "next lint"
+		"lint": "next lint",
+		"deploy": "gh-pages -d out"
 	},
 	"dependencies": {
 		"@emailjs/browser": "^4.4.1",
@@ -33,6 +34,7 @@
 		"autoprefixer": "^10.4.24",
 		"eslint": "^9.19.0",
 		"eslint-config-next": "^16.1.6",
+		"gh-pages": "^6.3.0",
 		"postcss": "^8.5.1",
 		"tailwindcss": "^4.1.18",
 		"typescript": "^5.7.3"
