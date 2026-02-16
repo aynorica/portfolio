@@ -305,7 +305,7 @@ export const BLOG_POSTS: BlogPost[] = [
 			},
 			{
 				heading: "Digging Into the Root Cause",
-				body: 'Here\'s where it gets interesting. When you run a CLI tool installed through nvm, Node.js sets process.argv[1] to the symlink path — something like ~/.nvm/versions/node/v22/bin/openclaw — not the actual file it points to. The code in candidateDirsFromArgv1() calls path.resolve() to normalize this, but here\'s the catch: path.resolve() doesn\'t follow symlinks. It just cleans up relative path segments. So the code starts walking up from the nvm bin/ folder looking for package.json, never finds it, and boom — "assets not found." Classic case of something that looks totally fine until you realize the input isn\'t what you think it is.',
+				body: "Here's where it gets interesting. When you run a CLI tool installed through nvm, Node.js sets process.argv[1] to the symlink path — something like ~/.nvm/versions/node/v22/bin/openclaw — not the actual file it points to. The code in candidateDirsFromArgv1() calls path.resolve() to normalize this, but here's the catch: path.resolve() doesn't follow symlinks. It just cleans up relative path segments. So the code starts walking up from the nvm bin/ folder looking for package.json, never finds it, and boom — \"assets not found.\" Classic case of something that looks totally fine until you realize the input isn't what you think it is.",
 				code: {
 					language: "typescript",
 					content:

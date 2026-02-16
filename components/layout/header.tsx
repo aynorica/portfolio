@@ -27,6 +27,15 @@ export default function Header() {
 		120,
 	);
 
+	const isHome = pathname === "/" || pathname === "";
+
+	const getHref = (href: string) => {
+		if (href.startsWith("#") && !isHome) {
+			return `/${href}`;
+		}
+		return href;
+	};
+
 	const isActive = (item: { href: string }) => {
 		if (item.href.startsWith("#")) {
 			return activeSection === item.href.replace("#", "");
@@ -73,7 +82,7 @@ export default function Header() {
 					{navigation.map((item) => (
 						<Link
 							key={item.name}
-							href={item.href}
+							href={getHref(item.href)}
 							className={`text-sm font-semibold tracking-wide transition-all hover:text-neon-blue relative group ${
 								isActive(item)
 									? "text-neon-blue"
@@ -119,7 +128,7 @@ export default function Header() {
 							{navigation.map((item) => (
 								<Link
 									key={item.name}
-									href={item.href}
+									href={getHref(item.href)}
 									className={`block rounded-lg px-3 py-2 text-base font-medium hover:bg-accent ${
 										isActive(item)
 											? "text-primary bg-accent/50"
