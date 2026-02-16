@@ -133,3 +133,106 @@
 		animation: gradient-x 3s ease infinite;
 	}
 }
+
+/* Blog Typography */
+.blog-prose {
+	@apply text-foreground/90 leading-relaxed;
+}
+
+.blog-prose h2 {
+	@apply text-3xl md:text-4xl font-bold font-heading tracking-tight mt-16 mb-6 text-foreground;
+}
+
+.blog-prose h3 {
+	@apply text-2xl font-bold font-heading tracking-tight mt-12 mb-4 text-foreground;
+}
+
+.blog-prose p {
+	@apply text-base md:text-lg leading-relaxed mb-6 text-foreground/80;
+}
+
+.blog-prose ul {
+	@apply space-y-3 mb-6 ml-4;
+}
+
+.blog-prose li {
+	@apply text-foreground/80 text-base md:text-lg leading-relaxed pl-2;
+}
+
+.blog-prose code {
+	@apply px-2 py-0.5 rounded-md bg-neon-blue/10 text-neon-blue text-sm font-mono;
+}
+
+.blog-prose pre {
+	@apply rounded-2xl border border-white/10 bg-card/60 backdrop-blur-xl p-6 mb-8 overflow-x-auto;
+}
+
+.blog-prose pre code {
+	@apply bg-transparent text-foreground/90 text-sm leading-relaxed p-0;
+}
+
+.blog-prose table {
+	@apply w-full mb-8 rounded-2xl overflow-hidden border border-white/10;
+}
+
+.blog-prose thead {
+	@apply bg-neon-blue/10;
+}
+
+.blog-prose th {
+	@apply px-4 py-3 text-left text-sm font-bold uppercase tracking-widest text-neon-blue;
+}
+
+.blog-prose td {
+	@apply px-4 py-3 text-sm text-foreground/80 border-t border-white/5;
+}
+
+.blog-prose tr:hover td {
+	@apply bg-white/5;
+}
+
+.blog-prose blockquote {
+	@apply border-l-4 border-neon-blue/50 pl-6 py-2 my-8 bg-neon-blue/5 rounded-r-xl;
+}
+
+.blog-prose blockquote p {
+	@apply text-foreground/70 italic;
+}
+
+/* Blog parallax hero overlay */
+.blog-hero-overlay {
+	background: linear-gradient(
+		180deg,
+		transparent 0%,
+		rgba(10, 10, 16, 0.3) 30%,
+		rgba(10, 10, 16, 0.7) 60%,
+		rgb(10, 10, 16) 100%
+	);
+}
+
+.dark .blog-hero-overlay {
+	background: linear-gradient(
+		180deg,
+		transparent 0%,
+		rgba(10, 10, 16, 0.3) 30%,
+		rgba(10, 10, 16, 0.7) 60%,
+		rgb(10, 10, 16) 100%
+	);
+}
+
+:root:not(.dark) .blog-hero-overlay {
+	background: linear-gradient(
+		180deg,
+		transparent 0%,
+		rgba(250, 250, 255, 0.3) 30%,
+		rgba(250, 250, 255, 0.7) 60%,
+		rgb(250, 250, 255) 100%
+	);
+}
+
+/* Parallax scroll container */
+.parallax-container {
+	perspective: 1000px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}

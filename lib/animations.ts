@@ -75,3 +75,30 @@ export const navLinkHover = {
 	color: "hsl(var(--primary))",
 	transition: { duration: 0.2 },
 };
+
+export const parallaxFadeIn: Variants = {
+	hidden: { opacity: 0, y: 60 },
+	visible: {
+		opacity: 1,
+		y: 0,
+		transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] as const },
+	},
+};
+
+export const blogCardHover = {
+	rest: { y: 0, scale: 1 },
+	hover: {
+		y: -12,
+		scale: 1.02,
+		transition: { duration: 0.3, ease: "easeOut" },
+	},
+};
+
+export const heroParallax: Variants = {
+	hidden: { opacity: 0, scale: 1.1 },
+	visible: {
+		opacity: 1,
+		scale: 1,
+		transition: { duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94] as const },
+	},
+};

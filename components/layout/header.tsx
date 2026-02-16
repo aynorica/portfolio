@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import ThemeToggle from "./theme-toggle";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
@@ -12,16 +13,26 @@ const navigation = [
 	{ name: "Tech Stack", href: "#tech-stack" },
 	{ name: "Experience", href: "#experience" },
 	{ name: "Projects", href: "#projects" },
+	{ name: "Blog", href: "/blog" },
 	{ name: "Education", href: "#education" },
 	{ name: "Contact", href: "#contact" },
 ];
 
 export default function Header() {
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+	const pathname = usePathname();
+	const anchorLinks = navigation.filter((item) => item.href.startsWith("#"));
 	const activeSection = useScrollSpy(
-		navigation.map((item) => item.href.replace("#", "")),
+		anchorLinks.map((item) => item.href.replace("#", "")),
 		120,
 	);
+
+	const isActive = (item: { href: string }) => {
+		if (item.href.startsWith("#")) {
+			return activeSection === item.href.replace("#", "");
+		}
+		return pathname.startsWith(item.href);
+	};
 
 	return (
 		<header className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-7xl">
@@ -64,7 +75,7 @@ export default function Header() {
 							key={item.name}
 							href={item.href}
 							className={`text-sm font-semibold tracking-wide transition-all hover:text-neon-blue relative group ${
-								activeSection === item.href.replace("#", "")
+								isActive(item)
 									? "text-neon-blue"
 									: "text-muted-foreground"
 							}`}
@@ -72,7 +83,7 @@ export default function Header() {
 							{item.name}
 							<span
 								className={`absolute -bottom-1 left-0 h-0.5 bg-neon-blue transition-all duration-300 ${
-									activeSection === item.href.replace("#", "")
+									isActive(item)
 										? "w-full"
 										: "w-0 group-hover:w-full"
 								}`}
@@ -110,8 +121,7 @@ export default function Header() {
 									key={item.name}
 									href={item.href}
 									className={`block rounded-lg px-3 py-2 text-base font-medium hover:bg-accent ${
-										activeSection ===
-										item.href.replace("#", "")
+										isActive(item)
 											? "text-primary bg-accent/50"
 											: ""
 									}`}

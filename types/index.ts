@@ -45,3 +45,29 @@ export interface SocialLink {
 	url: string;
 	icon: string;
 }
+
+export interface BlogSection {
+	heading: string;
+	body: string;
+	code?: {
+		language: string;
+		content: string;
+	};
+	table?: {
+		headers: string[];
+		rows: string[][];
+	};
+	list?: string[];
+}
+
+export interface BlogPost {
+	slug: string;
+	title: string;
+	date: string;
+	excerpt: string;
+	tags: string[];
+	category: string;
+	readTime: string;
+	coverGradient?: string;
+	content: BlogSection[];
+}
