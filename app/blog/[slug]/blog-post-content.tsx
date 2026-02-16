@@ -5,11 +5,7 @@ import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Calendar, Clock, ArrowLeft, ArrowRight, Tag } from "lucide-react";
 import type { BlogPost } from "@/types";
-import {
-	fadeInUp,
-	staggerContainer,
-	parallaxFadeIn,
-} from "@/lib/animations";
+import { fadeInUp, staggerContainer, parallaxFadeIn } from "@/lib/animations";
 
 interface BlogPostContentProps {
 	post: BlogPost;
@@ -148,7 +144,7 @@ export default function BlogPostContent({
 														<th key={i}>
 															{header}
 														</th>
-													)
+													),
 												)}
 											</tr>
 										</thead>
@@ -156,15 +152,13 @@ export default function BlogPostContent({
 											{section.table.rows.map(
 												(row, ri) => (
 													<tr key={ri}>
-														{row.map(
-															(cell, ci) => (
-																<td key={ci}>
-																	{cell}
-																</td>
-															)
-														)}
+														{row.map((cell, ci) => (
+															<td key={ci}>
+																{cell}
+															</td>
+														))}
 													</tr>
-												)
+												),
 											)}
 										</tbody>
 									</table>
