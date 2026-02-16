@@ -28,10 +28,11 @@ export default function Header() {
 	);
 
 	const isHome = pathname === "/" || pathname === "";
+	const basePath = process.env.__NEXT_ROUTER_BASEPATH || "";
 
 	const resolveHref = (href: string) => {
 		if (href.startsWith("#") && !isHome) {
-			return `/${href}`;
+			return `${basePath}/${href}`;
 		}
 		return href;
 	};
@@ -39,8 +40,7 @@ export default function Header() {
 	// For anchor links on non-home pages, we need a full page navigation
 	// (not Next.js client-side routing) so the browser actually navigates
 	// to the homepage and scrolls to the section.
-	const needsFullNav = (href: string) =>
-		href.startsWith("#") && !isHome;
+	const needsFullNav = (href: string) => href.startsWith("#") && !isHome;
 
 	const isActive = (item: { href: string }) => {
 		if (item.href.startsWith("#")) {
@@ -104,7 +104,11 @@ export default function Header() {
 
 						if (needsFullNav(item.href)) {
 							return (
-								<a key={item.name} href={href} className={className}>
+								<a
+									key={item.name}
+									href={href}
+									className={className}
+								>
 									{item.name}
 									{underline}
 								</a>
@@ -112,7 +116,11 @@ export default function Header() {
 						}
 
 						return (
-							<Link key={item.name} href={href} className={className}>
+							<Link
+								key={item.name}
+								href={href}
+								className={className}
+							>
 								{item.name}
 								{underline}
 							</Link>
@@ -158,7 +166,9 @@ export default function Header() {
 											key={item.name}
 											href={href}
 											className={cls}
-											onClick={() => setMobileMenuOpen(false)}
+											onClick={() =>
+												setMobileMenuOpen(false)
+											}
 										>
 											{item.name}
 										</a>
