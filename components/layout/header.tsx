@@ -29,12 +29,18 @@ export default function Header() {
 
 	const isHome = pathname === "/" || pathname === "";
 
-	const getHref = (href: string) => {
+	const resolveHref = (href: string) => {
 		if (href.startsWith("#") && !isHome) {
 			return `/${href}`;
 		}
 		return href;
 	};
+
+	// For anchor links on non-home pages, we need a full page navigation
+	// (not Next.js client-side routing) so the browser actually navigates
+	// to the homepage and scrolls to the section.
+	const needsFullNav = (href: string) =>
+		href.startsWith("#") && !isHome;
 
 	const isActive = (item: { href: string }) => {
 		if (item.href.startsWith("#")) {
@@ -79,17 +85,14 @@ export default function Header() {
 				</div>
 
 				<div className="hidden lg:flex lg:gap-x-10">
-					{navigation.map((item) => (
-						<Link
-							key={item.name}
-							href={getHref(item.href)}
-							className={`text-sm font-semibold tracking-wide transition-all hover:text-neon-blue relative group ${
-								isActive(item)
-									? "text-neon-blue"
-									: "text-muted-foreground"
-							}`}
-						>
-							{item.name}
+					{navigation.map((item) => {
+						const href = resolveHref(item.href);
+						const className = `text-sm font-semibold tracking-wide transition-all hover:text-neon-blue relative group ${
+							isActive(item)
+								? "text-neon-blue"
+								: "text-muted-foreground"
+						}`;
+						const underline = (
 							<span
 								className={`absolute -bottom-1 left-0 h-0.5 bg-neon-blue transition-all duration-300 ${
 									isActive(item)
@@ -97,8 +100,24 @@ export default function Header() {
 										: "w-0 group-hover:w-full"
 								}`}
 							/>
-						</Link>
-					))}
+						);
+
+						if (needsFullNav(item.href)) {
+							return (
+								<a key={item.name} href={href} className={className}>
+									{item.name}
+									{underline}
+								</a>
+							);
+						}
+
+						return (
+							<Link key={item.name} href={href} className={className}>
+								{item.name}
+								{underline}
+							</Link>
+						);
+					})}
 				</div>
 
 				<div className="hidden lg:flex lg:flex-1 lg:justify-end gap-4 items-center">
@@ -125,20 +144,38 @@ export default function Header() {
 						transition={{ duration: 0.2 }}
 					>
 						<div className="space-y-1 px-4 pb-3 pt-2">
-							{navigation.map((item) => (
-								<Link
-									key={item.name}
-									href={getHref(item.href)}
-									className={`block rounded-lg px-3 py-2 text-base font-medium hover:bg-accent ${
-										isActive(item)
-											? "text-primary bg-accent/50"
-											: ""
-									}`}
-									onClick={() => setMobileMenuOpen(false)}
-								>
-									{item.name}
-								</Link>
-							))}
+							{navigation.map((item) => {
+								const href = resolveHref(item.href);
+								const cls = `block rounded-lg px-3 py-2 text-base font-medium hover:bg-accent ${
+									isActive(item)
+										? "text-primary bg-accent/50"
+										: ""
+								}`;
+
+								if (needsFullNav(item.href)) {
+									return (
+										<a
+											key={item.name}
+											href={href}
+											className={cls}
+											onClick={() => setMobileMenuOpen(false)}
+										>
+											{item.name}
+										</a>
+									);
+								}
+
+								return (
+									<Link
+										key={item.name}
+										href={href}
+										className={cls}
+										onClick={() => setMobileMenuOpen(false)}
+									>
+										{item.name}
+									</Link>
+								);
+							})}
 							<a
 								href="https://docs.google.com/document/d/1Z9If1DGKY1XZM26amY69JA15lqiQ6tnCTtXhbywm_ks/edit?tab=t.0"
 								target="_blank"
