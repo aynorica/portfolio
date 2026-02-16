@@ -28,7 +28,7 @@ export default function Header() {
 	);
 
 	const isHome = pathname === "/" || pathname === "";
-	const basePath = process.env.__NEXT_ROUTER_BASEPATH || "";
+	const basePath = process.env.NODE_ENV === "production" ? "/portfolio" : "";
 
 	const resolveHref = (href: string) => {
 		if (href.startsWith("#") && !isHome) {
